@@ -59,6 +59,10 @@
     <Compile Include="Migrations\201709301346520_ProdutoImagem.Designer.cs">
       <DependentUpon>201709301346520_ProdutoImagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710211706033_ProdutoEmLeilao.cs" />
+    <Compile Include="Migrations\201710211706033_ProdutoEmLeilao.Designer.cs">
+      <DependentUpon>201710211706033_ProdutoEmLeilao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfiguration\CategoriaConfiguration.cs" />
     <Compile Include="ModelConfiguration\ProdutoConfiguration.cs" />
@@ -81,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709301346520_ProdutoImagem.resx">
       <DependentUpon>201709301346520_ProdutoImagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710211706033_ProdutoEmLeilao.resx">
+      <DependentUpon>201710211706033_ProdutoEmLeilao.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
