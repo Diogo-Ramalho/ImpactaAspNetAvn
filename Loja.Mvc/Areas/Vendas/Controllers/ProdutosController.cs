@@ -11,6 +11,9 @@ using Loja.Mvc.Hubs;
 
 namespace Loja.Mvc.Areas.Vendas.Controllers
 {
+    using System.Web.Mvc;
+    //[Authorize(Roles = "Master")]
+    [Authorize(Roles = "Administrador, Leiloeiro")]
     public class ProdutosController : Controller
     {
         // ToDo: design pattern Unity of Work.
