@@ -12,7 +12,7 @@ namespace Loja.Dominio
     public class Usuario : IdentityUser
     {
         public string Nome { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {

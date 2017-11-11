@@ -178,6 +178,13 @@ namespace Loja.Mvc.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult VerificarDisponibilidadeEmail(string email)
+        {
+            return Json(UserManager.FindByEmail(email) == null);
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -373,7 +380,10 @@ namespace Loja.Mvc.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new Usuario { UserName = model.Email, Email = model.Email };
+                var user = new Usuario {
+                    Nome = model.Nome,
+                    UserName = model.Email,
+                    Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

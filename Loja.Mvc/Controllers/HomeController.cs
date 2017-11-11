@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Loja.Mvc.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,34 @@ namespace Loja.Mvc.Controllers
     {
         public ActionResult Index()
         {
+            DefinirLinguagemPadrao();
             return View();
+        }
+
+        private void DefinirLinguagemPadrao()
+        {
+            if (Request.Cookies[Cookie.linguagemSelecionada] != null)
+            {
+                return;
+            }
+
+            var linguagem = CulturaHelper.LinguagemPadrao;
+
+            if (Request.UserLanguages != null && Request.UserLanguages[0] != string.Empty)
+            {
+                linguagem = Request.UserLanguages[0];
+            }
+
+            var linguagemSelecionadaCookie = new HttpCookie(Cookie.linguagemSelecionada, linguagem);
+            linguagemSelecionadaCookie.Expires = DateTime.MaxValue;
+
+            Response.Cookies.Add(linguagemSelecionadaCookie);
+        }
+
+        public ActionResult DefinirLinguagem(string linguagem)
+        {
+            Response.Cookies[Cookie.linguagemSelecionada].Value = linguagem;
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult About()
@@ -26,5 +54,6 @@ namespace Loja.Mvc.Controllers
 
             return View();
         }
+        
     }
 }
