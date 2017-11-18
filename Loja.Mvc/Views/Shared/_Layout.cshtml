@@ -30,9 +30,9 @@
                                 <li>@Html.ActionLink("Produtos", "Index", "Produtos", new { Area = "Vendas" }, null)</li>
                                 <li class="divider" />
 
-                                @if (User.IsInRole(Perfil.Master.ToString())) {
+@*                                @if (User.IsInRole(Perfil.Master.ToString())) {*@
                                 <li>@Html.ActionLink("Leilões", "Index", "Leiloes", new { Area = "Vendas" }, null)</li>
-                                }
+  @*                              }*@
                             </ul>
                         </li>
                     </ul>

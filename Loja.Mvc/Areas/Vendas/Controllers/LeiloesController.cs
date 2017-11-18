@@ -45,5 +45,10 @@ namespace Loja.Mvc.Areas.Vendas.Controllers
             }
             return View(Mapeamento.Mapear(produto));
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
     }
 }

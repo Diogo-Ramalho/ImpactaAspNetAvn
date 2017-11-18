@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Acao.cs" />
     <Compile Include="Categoria.cs" />
+    <Compile Include="Leilao.cs" />
     <Compile Include="Modulo.cs" />
     <Compile Include="Perfil.cs" />
     <Compile Include="Produto.cs" />

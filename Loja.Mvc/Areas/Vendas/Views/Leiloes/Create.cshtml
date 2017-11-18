@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leilões</title>
+    <meta charset="utf-8" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container body-content">
+    <form action="/api/Vendas/Leiloes" id="leilaoForm" method="post">
+        <div class="form-horizontal">
+            <h4>Leilão</h4>
+            <hr />
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <label for="lote" class="control-label">Lote</label>
+                </div>
+                <div class="col-md-10">
+                    <input data-bind="value: lote, valueUpdate: 'keyup'" type="text" id="lote" name="lote" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <label for="preco" class="control-label">Preço</label>
+                </div>
+                <div class="col-md-10">
+                    <input data-bind="value: preco, valueUpdate: 'keyup'" type="text" id="preco" name="preco" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <label for="produtosId" class="control-label">Produtos</label>
+                </div>
+                <div class="col-md-10">
+                    <select data-bind="selectedOptions: produtosId" id="produtosId" name="produtosId" class="form-control" multiple="multiple" ></select>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input data-bind="enable: validarFormulario" type="submit" value="Salvar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script src="/Scripts/jquery-1.10.2.min.js"></script>
+<script src="/Scripts/bootstrap.min.js"></script>
+<script src="/Scripts/select2.min.js"></script>
+<script src="~/Scripts/knockout-3.4.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        obterProdutos();
+        vincularEventos();
+    });
+
+    function vincularEventos() {
+        ko.applyBindings(viewModel);
+        vincularSubmeter();
+    }
+
+    function vincularSubmeter() {
+        $("#leilaoForm").on("submit", function (evento) {
+            var form = $(this);
+
+            $.ajax({
+                type: form.attr("method"), //"GET"
+                url: form.attr("action"),
+                data: ko.toJSON(viewModel)
+            })
+                .success(function (response) {
+                    alert("Leilão cadastrado com sucesso!");
+                    form[0].reset();
+                    $("#produtosId").html("");
+
+                    console.log(response);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("Erro ao cadastrar leilão!");
+
+                    console.log(errorThrown);
+                });
+
+            evento.preventDefault();
+        });
+    }
+
+
+    var viewModel = {
+        lote: ko.observable(""),
+        preco: ko.observable(0),
+        produtosId: ko.observableArray(),
+
+        validarFormulario: ko.pureComputed(function () {
+            return viewModel.lote() && viewModel.preco() && viewModel.produtosId().length;
+        })
+    };
+
+    function obterProdutos() {
+        $("#produtosId").select2({
+            minimumResultsForSearch: -1,
+            delay: 500,
+
+            ajax: {
+                url: "/api/Vendas/Leiloes",
+                dataType: 'json',
+
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data, function (index, produto) {
+                        results.push({
+                            id: produto.id, // id - case sensitive.
+                            text: produto.nome // nome - case sensitive.
+                        });
+                    });
+
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+    }
+</script>
